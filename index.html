@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merry Christmas Cesa! 🎄 Love, Farel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #C33764 0%, #1D2671 50%, #4A148C 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .hearts {
+            position: fixed;
+            top: -10px;
+            color: #ff6b9d;
+            font-size: 1em;
+            animation: float linear infinite;
+            pointer-events: none;
+            z-index: 1000;
+            text-shadow: 0 0 5px rgba(255,107,157,0.8);
+        }
+
+        @keyframes float {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 1em;
+            animation: fall linear infinite;
+            pointer-events: none;
+            z-index: 1000;
+            text-shadow: 0 0 5px rgba(255,255,255,0.8);
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ffd700;
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px #ffd700, 0 0 30px #ffd700; }
+            50% { text-shadow: 0 0 40px #ffd700, 0 0 60px #ffd700; }
+        }
+
+        .message {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px auto;
+            max-width: 700px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .message p {
+            font-size: 1.4em;
+            line-height: 1.8;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .tree {
+            margin: 60px auto;
+            position: relative;
+            width: 250px;
+        }
+
+        .tree-part {
+            margin: -10px auto;
+            width: 0;
+            height: 0;
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-bottom: 100px solid #2d5016;
+        }
+
+        .tree-part:nth-child(2) {
+            border-left: 80px solid transparent;
+            border-right: 80px solid transparent;
+            border-bottom: 120px solid #3a6b1f;
+        }
+
+        .tree-part:nth-child(3) {
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 140px solid #478228;
+        }
+
+        .trunk {
+            width: 50px;
+            height: 60px;
+            background: #8B4513;
+            margin: 0 auto;
+        }
+
+        .star-top {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 50px solid #ffd700;
+            margin: 0 auto 0;
+            position: relative;
+            animation: star-pulse 1.5s infinite;
+            filter: drop-shadow(0 0 10px #ffd700);
+        }
+
+        @keyframes star-pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(10deg); }
+        }
+
+        .gifts {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 60px 0;
+            flex-wrap: wrap;
+        }
+
+        .gift {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #ff6b9d, #c9184a);
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .gift:hover {
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .gift::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: #ffd700;
+            transform: translateY(-50%);
+        }
+
+        .gift::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 20px;
+            background: #ffd700;
+            transform: translateX(-50%);
+        }
+
+        .gift-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+            z-index: 2000;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .gift-popup.active {
+            display: block;
+            animation: popIn 0.3s;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0);
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .gift-popup h3 {
+            color: #c9184a;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .gift-popup p {
+            color: #2c3e50;
+            font-size: 1.3em;
+            line-height: 1.6;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #999;
+            background: none;
+            border: none;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #c9184a;
+        }
+
+        .countdown {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px auto;
+            max-width: 600px;
+        }
+
+        .countdown h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .time-unit {
+            text-align: center;
+        }
+
+        .time-value {
+            font-size: 3em;
+            font-weight: bold;
+            color: #c9184a;
+        }
+
+        .time-label {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2em;
+            }
+            .message p {
+                font-size: 1.2em;
+            }
+            .time-value {
+                font-size: 2em;
+            }
+            .gift {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎄 Merry Christmas, Cesa! 🎄</h1>
+
+        <div class="message">
+            <p>My Dearest Cesa,</p>
+            <p>This Christmas, I want you to know how special you are to me. You bring so much joy, love, and happiness into my life every single day.</p>
+            <p>Being with you is the greatest gift I could ever ask for! 💕</p>
+            <p>Thank you for being my partner, my best friend, and the love of my life.</p>
+            <p style="font-size: 1.6em; margin-top: 25px; color: #c9184a;">I love you so much, Cesa! ❤️</p>
+            <p style="font-size: 1.3em; margin-top: 15px; color: #2c3e50; font-style: italic;">Forever Yours, Farel 💝</p>
+        </div>
+
+        <div class="countdown">
+            <h2>🎅 Countdown to Christmas 🎅</h2>
+            <div class="timer">
+                <div class="time-unit">
+                    <div class="time-value" id="days">0</div>
+                    <div class="time-label">Days</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time-value" id="hours">0</div>
+                    <div class="time-label">Hours</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time-value" id="minutes">0</div>
+                    <div class="time-label">Minutes</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time-value" id="seconds">0</div>
+                    <div class="time-label">Seconds</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tree">
+            <div class="star-top"></div>
+            <div class="tree-part"></div>
+            <div class="tree-part"></div>
+            <div class="tree-part"></div>
+            <div class="trunk"></div>
+        </div>
+
+        <h2 style="color: #ffd700; margin: 40px 0; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">💝 Click the Gifts! 💝</h2>
+        <div class="gifts">
+            <div class="gift" data-gift="0"></div>
+            <div class="gift" data-gift="1"></div>
+            <div class="gift" data-gift="2"></div>
+        </div>
+    </div>
+
+    <div class="gift-popup" id="popup">
+        <button class="close-btn" id="closeBtn">&times;</button>
+        <h3 id="popupTitle"></h3>
+        <p id="popupText"></p>
+    </div>
+
+    <script>
+        // Suppress all console errors for clean experience
+        window.addEventListener('error', function(e) {
+            e.preventDefault();
+            return true;
+        });
+
+        window.addEventListener('unhandledrejection', function(e) {
+            e.preventDefault();
+        });
+
+        (function() {
+            'use strict';
+
+            try {
+                // Snowflakes
+                function createSnowflake() {
+                    try {
+                        var snowflake = document.createElement('div');
+                        snowflake.className = 'snowflake';
+                        snowflake.innerHTML = '❄';
+                        snowflake.style.left = Math.random() * 100 + '%';
+                        snowflake.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                        snowflake.style.opacity = Math.random().toString();
+                        snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                        document.body.appendChild(snowflake);
+
+                        setTimeout(function() {
+                            try {
+                                if (snowflake && snowflake.parentNode) {
+                                    snowflake.parentNode.removeChild(snowflake);
+                                }
+                            } catch(err) {}
+                        }, 8000);
+                    } catch(err) {}
+                }
+
+                // Hearts
+                function createHeart() {
+                    try {
+                        var heart = document.createElement('div');
+                        heart.className = 'hearts';
+                        heart.innerHTML = '❤';
+                        heart.style.left = Math.random() * 100 + '%';
+                        heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                        heart.style.opacity = Math.random().toString();
+                        heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                        document.body.appendChild(heart);
+
+                        setTimeout(function() {
+                            try {
+                                if (heart && heart.parentNode) {
+                                    heart.parentNode.removeChild(heart);
+                                }
+                            } catch(err) {}
+                        }, 10000);
+                    } catch(err) {}
+                }
+
+                setInterval(createSnowflake, 300);
+                setInterval(createHeart, 500);
+
+                // Gift messages
+                var giftMessages = [
+                    {
+                        title: '💕 My Love',
+                        text: 'Cesa, you are the light of my life and my everything. Every moment with you is a treasure I hold close to my heart.'
+                    },
+                    {
+                        title: '🌹 Beautiful You',
+                        text: 'Your smile brightens my darkest days, and your love makes everything worth it. Thank you for being you, my beautiful Cesa!'
+                    },
+                    {
+                        title: '✨ Our Future',
+                        text: 'I can\'t wait to spend many more Christmases with you, making memories and sharing love. You\'re my forever and always!'
+                    }
+                ];
+
+                var popup = document.getElementById('popup');
+                var popupTitle = document.getElementById('popupTitle');
+                var popupText = document.getElementById('popupText');
+                var closeBtn = document.getElementById('closeBtn');
+                var gifts = document.querySelectorAll('.gift');
+
+                if (gifts && popup && popupTitle && popupText && closeBtn) {
+                    gifts.forEach(function(gift) {
+                        gift.addEventListener('click', function() {
+                            try {
+                                var index = parseInt(this.getAttribute('data-gift'));
+                                var message = giftMessages[index];
+                                if (message) {
+                                    popupTitle.textContent = message.title;
+                                    popupText.textContent = message.text;
+                                    popup.classList.add('active');
+                                }
+                            } catch(err) {}
+                        });
+                    });
+
+                    closeBtn.addEventListener('click', function() {
+                        try {
+                            popup.classList.remove('active');
+                        } catch(err) {}
+                    });
+
+                    popup.addEventListener('click', function(e) {
+                        try {
+                            if (e.target === popup) {
+                                popup.classList.remove('active');
+                            }
+                        } catch(err) {}
+                    });
+                }
+
+                // Countdown timer
+                function updateCountdown() {
+                    try {
+                        var christmas = new Date('December 25, 2025 00:00:00').getTime();
+                        var now = new Date().getTime();
+                        var distance = christmas - now;
+
+                        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                        var daysEl = document.getElementById('days');
+                        var hoursEl = document.getElementById('hours');
+                        var minutesEl = document.getElementById('minutes');
+                        var secondsEl = document.getElementById('seconds');
+
+                        if (daysEl) daysEl.textContent = days >= 0 ? days : 0;
+                        if (hoursEl) hoursEl.textContent = hours >= 0 ? hours : 0;
+                        if (minutesEl) minutesEl.textContent = minutes >= 0 ? minutes : 0;
+                        if (secondsEl) secondsEl.textContent = seconds >= 0 ? seconds : 0;
+
+                        if (distance < 0) {
+                            var countdownH2 = document.querySelector('.countdown h2');
+                            var timerDiv = document.querySelector('.timer');
+                            if (countdownH2) countdownH2.textContent = '🎅 Merry Christmas! 🎅';
+                            if (timerDiv) timerDiv.innerHTML = '<div style="font-size: 2.5em; color: #c9184a; font-weight: bold;">🎄 Happy Holidays, My Love! 🎄</div>';
+                        }
+                    } catch(err) {}
+                }
+
+                setInterval(updateCountdown, 1000);
+                updateCountdown();
+
+            } catch(err) {}
+        })();
+    </script>
+</body>
+</html>
